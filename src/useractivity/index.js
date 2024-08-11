@@ -95,7 +95,7 @@ const UserActivity = () => {
                         </div>
                     </div>
                     <div className='two-2'>
-                        <h1>Most Recent Posts</h1>
+                        <h1>Most Recent Users</h1>
 
                         <div >
                             <table style={{ borderCollapse: 'collapse', width: '100%' }}>
