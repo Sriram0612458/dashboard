@@ -1,0 +1,19 @@
+.two-sub{
+    display: flex;
+    flex: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.posts{
+    display: flex;
+    align-items: center;
+}
+.sub-posts{
+    display: flex;
+align-items:center;
+justify-content:space-around;
+width: 50vw;
+}
+.two-2{
+margin-left: 50px;
+}

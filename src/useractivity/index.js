@@ -1,8 +1,11 @@
+import React, { useState } from 'react';
+
 import Layout from "../sidebar"
 import Userdata from "../userdata";
 import Navbar from "../navbar";
 
-import { useState } from "react";
+import './index.css';
+
 const UserActivity = () => {
     const userdata =
         [
@@ -62,26 +65,88 @@ const UserActivity = () => {
         return timeDifference <= 24 * 60 * 60 * 1000;
     });
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const rowsPerPage = 5;
+
+
+    const indexOfLastRow = currentPage * rowsPerPage;
+    const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+    const currentRows = filterUser.slice(indexOfFirstRow, indexOfLastRow);
+
+
+    const totalPages = Math.ceil(filterUser.length / rowsPerPage);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
         <><Navbar />
             <div className="one">
                 <div className="sub-two"><Layout /></div>
 
-                <div className="two">
-                    <div className="usenlen-div ">
-                        <h1 className="heading-one">Total users</h1>
-                        <h1>{userLen}</h1>
+                <div >
+                    <div className="two-sub">
+                        <div className="usenlen-div ">
+                            <h1 className="heading-one">Total users</h1>
+                            <h1>{userLen}</h1>
+                        </div>
+                        <div className="usenlen-div ">
+                            <h1 className="heading-one">Total Active Users</h1>
+                            <h1>{ActiveLength}</h1>
+                        </div>
                     </div>
-                    <div className="usenlen-div ">
-                        <h1 className="heading-one">Total Active Users</h1>
-                        <h1>{ActiveLength}</h1>
+                    <div className='two-2'>
+                        <h1>Most Recent Posts</h1>
+
+                        <div >
+                            <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+                                <thead style={{ backgroundColor: '#f2f2f2' }}>
+                                    <tr>
+                                        <th style={{ border: '1px solid black', padding: '8px' }}>User_id</th>
+                                        <th style={{ border: '1px solid black', padding: '8px' }}>Username</th>
+                                        <th style={{ border: '1px solid black', padding: '8px' }}>Name</th>
+                                        <th style={{ border: '1px solid black', padding: '8px' }}>Email</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {currentRows.map(user => (
+                                        <tr key={user.userId}>
+                                            <td style={{ border: '1px solid black', padding: '8px' }}>{user.userid}</td>
+                                            <td style={{ border: '1px solid black', padding: '8px' }}>{user.username}</td>
+                                            <td style={{ border: '1px solid black', padding: '8px' }}>{user.name}</td>
+                                            <td style={{ border: '1px solid black', padding: '8px' }}>{user.email}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+
+                            <div style={{ marginTop: '10px' }}>
+                                {Array.from({ length: totalPages }, (_, index) => (
+                                    <button
+                                        key={index + 1}
+                                        onClick={() => paginate(index + 1)}
+                                        style={{
+                                            margin: '5px',
+                                            padding: '5px 10px',
+                                            backgroundColor: currentPage === index + 1 ? '#4CAF50' : '#f2f2f2',
+                                            color: currentPage === index + 1 ? 'white' : 'black',
+                                            border: '1px solid #ccc',
+                                            cursor: 'pointer'
+                                        }}
+                                    >
+                                        {index + 1}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+
                     </div>
 
                 </div>
+
+
+
             </div>
-
-
 
 
         </>

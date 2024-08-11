@@ -14,7 +14,7 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-   width: 70vw;
+    width: 80vw;
 }
 .usenlen-div{
     padding: 20px;
@@ -32,7 +32,7 @@
 .heading-one{
     font-family: "Roboto";
     margin-bottom: -10px;
-
+   font-size: 20px;
 
 }
 

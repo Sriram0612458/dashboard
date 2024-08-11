@@ -1,10 +1,12 @@
+import React, { useState } from 'react';
+
 import Layout from "../sidebar"
 import Userdata from "../userdata";
 import Navbar from "../navbar";
-import { useState } from "react";
-import UserActivity from "../useractivity";
-const PostActivity = () => {
-    const [filterData, setFilterData] = useState([])
+
+import './index.css';
+
+const UserActivity = () => {
     const userdata =
         [
             { "userid": 1, "username": "user1", "name": "Alice Johnson", "email": "alice.johnson@example.com", "active_in_last_24h": "Yes" },
@@ -63,23 +65,87 @@ const PostActivity = () => {
         return timeDifference <= 24 * 60 * 60 * 1000;
     });
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const rowsPerPage = 5;
+
+
+    const indexOfLastRow = currentPage * rowsPerPage;
+    const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+    const currentRows = recentPosts.slice(indexOfFirstRow, indexOfLastRow);
+
+
+    const totalPages = Math.ceil(recentPosts.length / rowsPerPage);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
         <><Navbar />
             <div className="one">
                 <div className="sub-two"><Layout /></div>
 
-                <div className="two">
+                <div >
+                    <div className="two-sub">
+                        <div className="usenlen-div ">
+                            <h1 className="heading-one">Total Posts</h1>
+                            <h1>{totalPost}</h1>
+                        </div>
+                        <div className="usenlen-div ">
+                            <h1 className="heading-one">Total Posts in Last 24H</h1>
+                            <h1>{recentPosts.length}</h1>
+                        </div>
+                    </div>
+                    <div className='two-2'>
+                        <h1>Most Recent Posts</h1>
 
-                    <div className="usenlen-div ">
-                        <h1 className="heading-one">Total Posts</h1>
-                        <h1>{totalPost}</h1>
+
+
+                        <div>
+                            <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+                                <thead style={{ backgroundColor: '#f2f2f2' }}>
+                                    <tr>
+                                        <th style={{ border: '1px solid black', padding: '8px' }}>Post_id</th>
+                                        <th style={{ border: '1px solid black', padding: '8px' }}>Post Caption</th>
+                                        <th style={{ border: '1px solid black', padding: '8px' }}>Media URL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {currentRows.map(post => (
+                                        <tr key={post.postId}>
+                                            <td style={{ border: '1px solid black', padding: '8px' }}>{post.postid}</td>
+                                            <td style={{ border: '1px solid black', padding: '8px' }}>{post.post_caption}</td>
+                                            <td style={{ border: '1px solid black', padding: '8px' }}>
+                                                <a href={post.mediaUrl} target="_blank" rel="noopener noreferrer">{post.media_url}</a>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+
+                            <div style={{ marginTop: '10px' }}>
+                                {Array.from({ length: totalPages }, (_, index) => (
+                                    <button
+                                        key={index + 1}
+                                        onClick={() => paginate(index + 1)}
+                                        style={{
+                                            margin: '5px',
+                                            padding: '5px 10px',
+                                            backgroundColor: currentPage === index + 1 ? '#4CAF50' : '#f2f2f2',
+                                            color: currentPage === index + 1 ? 'white' : 'black',
+                                            border: '1px solid #ccc',
+                                            cursor: 'pointer'
+                                        }}
+                                    >
+                                        {index + 1}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
                     </div>
-                    <div className="usenlen-div ">
-                        <h1 className="heading-one">Total Posts in 24H</h1>
-                        <h1>{recentPosts.length}</h1>
-                    </div>
+
                 </div>
+
+
+
             </div>
 
 
@@ -87,4 +153,4 @@ const PostActivity = () => {
 
     )
 }
-export default PostActivity
+export default UserActivity

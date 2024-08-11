@@ -84,7 +84,7 @@ const Data = () => {
                         <h1>{totalPost}</h1>
                     </div>
                     <div className="usenlen-div ">
-                        <h1 className="heading-one">Total Posts in 24H</h1>
+                        <h1 className="heading-one">Total Posts in Last 24H</h1>
                         <h1>{recentPosts.length}</h1>
                     </div>
                 </div>
